@@ -1,15 +1,15 @@
 import { db } from "./index";
 import { eq } from "drizzle-orm";
 import {
-  User,
-  products,
+  users,
   comments,
+  products,
   type NewUser,
   type NewComment,
   type NewProduct,
-  users,
 } from "./schema";
 
+// USER QUERIES
 export const createUser = async (data: NewUser) => {
   const [user] = await db.insert(users).values(data).returning();
   return user;
@@ -24,6 +24,7 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
   if (!existingUser) {
     throw new Error(`User with id ${id} not found`);
   }
+
   const [user] = await db
     .update(users)
     .set(data)
@@ -32,7 +33,11 @@ export const updateUser = async (id: string, data: Partial<NewUser>) => {
   return user;
 };
 
+// upsert => create or update
+
 export const upsertUser = async (data: NewUser) => {
+
+
   // and this is what CR suggested
   const [user] = await db
     .insert(users)
@@ -45,6 +50,7 @@ export const upsertUser = async (data: NewUser) => {
   return user;
 };
 
+// PRODUCT QUERIES
 export const createProduct = async (data: NewProduct) => {
   const [product] = await db.insert(products).values(data).returning();
   return product;
