@@ -86,11 +86,11 @@ export const updateProduct = async (req: Request, res: Response) => {
       return;
     }
 
-    const product = await queries.updateProduct(id, {
-      title,
-      description,
-      imageUrl,
-    });
+     const product = await queries.updateProduct(id, {
+       title,
+       description,
+       imageUrl,
+     });
 
     res.status(200).json(product);
   } catch (error) {
